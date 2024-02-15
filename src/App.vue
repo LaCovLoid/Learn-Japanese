@@ -1,18 +1,24 @@
 
 <template>
   
-  <header>
+  <HeaderComponent />
+
+  <RouterView /> <!--그 라우터 주소에 따라 상황에 맞는 view를 출력함-->
+
+  <div>
     <RouterLink to="/">Home</RouterLink>
     <RouterLink to="/about">About</RouterLink>
-  </header>
-  <RouterView /> <!--이게 본체?? 뭘 소환하는거지 홈뷰소환한건데 어디서 소환된겨?-->
+    <RouterLink :to="{name:'test',params:{word:'idd'}}" >Test</RouterLink>
+  </div>
+
+  <FooterComponent />
 </template>
 
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-
+import HeaderComponent from './components/HeaderComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 </script>
 
 <style scoped>
