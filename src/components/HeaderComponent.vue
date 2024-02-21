@@ -1,47 +1,84 @@
 <template>
     <div :class="$style.index">
-        <div v-for="(item,index) in menuList" :key="index" :class="$style.menuButton">
-            <RouterLink :to="item.path"> {{ item.name }} </RouterLink>
-        </div>
-
+        <main :class="$style.container">
+            <div v-for="(item,index) in menuList" :key="index" :class="$style.menuButton">
+                <RouterLink :to="item.path"> {{ item.name }} </RouterLink>
+            </div>
+            {{ testBool }}
+            <div v-if="testBool" :class="$style.rightMenus">
+                <RouterLink to="/mypage" :class="$style.menuButton">My Page</RouterLink>
+                <span @click="logout" :class="$style.menuButton">logout</span>
+            </div>
+            <div v-else :class="[$style.menuButton, $style.loginButton]">
+                <RouterLink to="/login">Login</RouterLink>
+            </div>
+        </main>
     </div>
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
-import {reactive} from 'vue';
+import {ref,reactive} from 'vue';
+
+let testBool = ref(true);
 
 const menuList = reactive([
 {
-        name: '딩섬',
-        path: '/about'
-    },
-    {
-        name: '넝마',
+        name: 'Home', //랜덤 단어
         path: '/'
     },
     {
-        name: '사류',
-        path: '/'
+        name: '번역', //이건 papago api 사용
+        path: '/translate'
     },
     {
-        name: '청우',
-        path: '/'
+        name: '챌린지', //시간제한있음, 랭킹시스템 있음
+        path: '/challenge'
+    },
+    {
+        name: '초심자', //히라가나,가타카나 발음 (반응형 사이트)
+        path: '/beginner'
     },
 
 ]);
 
-function clickedImg() {
-    router.push("/");
+function logout() {
+    testBool.value = false;
+    alert(testBool.value);
 }
 
 </script>
 
 <style lang="scss" module>
 .index {
-    .menuButton {
-        display: inline-block;
-        margin: 0px;
+    font-size: 18px;
+    background-color: #fadaff;
+    .container {
+        margin: 0 auto;
+        padding: 10px 10px;
+        max-width: 1280px;
+
+        background-color: #dab5e0;
+        position: relative;
+        .menuButton {
+            margin: 0 5px;
+            padding: 5px 10px;
+            display: inline-block;
+
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #fceaff;
+        }
+        .rightMenus {
+            padding-right: 10px;
+            display: inline-block; 
+            position: absolute;
+            right: 0; 
+        }
+        .loginButton{
+            margin-right: 15px;
+            position: absolute;
+            right: 0;
+        }
     }
 }
 </style>

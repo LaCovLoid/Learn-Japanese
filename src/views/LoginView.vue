@@ -1,0 +1,12 @@
+<template>
+    <main>
+    </main>
+</template>
+
+<script setup lang="ts">
+import {ref} from 'vue';
+
+</script>
+
+<style lang="scss" module>
+</style>

@@ -7,7 +7,6 @@
 <script setup lang="ts">
 import {ref,reactive} from 'vue';
 import { useRoute } from 'vue-router';
-
 const route = useRoute();
 const word = ref(route.params.word);
 
