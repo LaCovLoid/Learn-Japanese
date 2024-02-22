@@ -5,6 +5,7 @@
                 <RouterLink :to="item.path"> {{ item.name }} </RouterLink>
             </div>
             {{ testBool }}
+            <span @click="storeUp">{{ store.count }}</span>
             <div v-if="testBool" :class="$style.rightMenus">
                 <RouterLink to="/mypage" :class="$style.menuButton">My Page</RouterLink>
                 <span @click="logout" :class="$style.menuButton">logout</span>
@@ -18,6 +19,9 @@
 
 <script setup lang="ts">
 import {ref,reactive} from 'vue';
+
+import { useCounterStore } from '@/store/index';
+const store = useCounterStore();
 
 let testBool = ref(true);
 
@@ -44,6 +48,10 @@ const menuList = reactive([
 function logout() {
     testBool.value = false;
     alert(testBool.value);
+}
+function storeUp() {
+    store.setCount(store.count + 1);
+    testBool.value = true;
 }
 
 </script>
