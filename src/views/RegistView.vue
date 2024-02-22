@@ -1,16 +1,14 @@
 <template>
     <div :class="$style.index">
-        <main :class="$style.loginMain">
+        <main :class="$style.registMain">
             <input :class="$style.inputId" placeholder="아이디" v-model="id">
             <br/>
             <input type="password" placeholder="비밀번호" :class="$style.inputPassword" v-model="password">
             <br/>
-            <span :class="$style.loginButton" @click="onSubmit">로그인</span>
+            <input type="password" placeholder="비밀번호 재입력" :class="$style.inputPassword" v-model="checkPassword">
+            <br/>
+            <span :class="$style.registButton" @click="onSubmit">회원가입</span>
             <hr>
-            <div :class="$style.kakaoLogin">
-                카카오오오
-            </div>
-            <RouterLink to="/regist" :class="$style.linkToRegist">회원 가입</RouterLink>
         </main>
     </div>
 </template>
@@ -24,24 +22,29 @@ const store = piniaStore();
 
 let id = ref("");
 let password = ref("");
+let checkPassword = ref("");
 
 function onSubmit() {
-    postAPI("/login",{
+    if (checkPassword.value != password.value){
+        alert("재입력된 비밀번호가 같지 않습니다");
+        console.log("안왔엉");
+        return;
+    }
+    console.log("왔엉");
+    postAPI("/regist",{
         id: id,
         password: password,
     })
-    .then(loginFetchHandler)
-    .catch(loginFailedHandler);
+    .then(registFetchHandler)
+    .catch(registFailedHandler);
 }
 
-function loginFetchHandler(response: any){
-    //아이디도 store에 보관해서 활용 ex)닉넴과 토큰값이 동시에 같은지? 혹은 닉넴님~어서오세요
-    //아냐 받는값이 엑세스토큰이라 db를 새로 만들어야해
-    store.setAccessToken(response.data);
-    router.push("/");
+function registFetchHandler(){
+		alert("회원가입에 성공하였습니다");
+		router.push("/login");
 }
-function loginFailedHandler(){
-    alert("로그인 실패");
+function registFailedHandler(){
+    alert("회원가입 실패");
     return;
 }
 
@@ -50,7 +53,7 @@ function loginFailedHandler(){
 <style lang="scss" module>
 .index {
     background-color: #f0ffff;
-    .loginMain {
+    .registMain {
         margin: 0 auto;
         max-width: 1280px;
 
@@ -66,7 +69,7 @@ function loginFailedHandler(){
             margin-top: 10px;
             font-size: 20px;
         }
-        .loginButton {
+        .registButton {
             margin-top: 10px;
             padding: 10px 15px;
             display: inline-block;

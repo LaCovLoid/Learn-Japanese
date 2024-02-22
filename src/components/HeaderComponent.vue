@@ -1,12 +1,12 @@
 <template>
     <div :class="$style.index">
-        <main :class="$style.container">
+        <main :class="$style.headerMain">
             <div v-for="(item,index) in menuList" :key="index" :class="$style.menuButton">
                 <RouterLink :to="item.path"> {{ item.name }} </RouterLink>
             </div>
-            {{ testBool }}
+            {{ store.accessToken }}
             <span @click="storeUp">{{ store.count }}</span>
-            <div v-if="testBool" :class="$style.rightMenus">
+            <div v-if="store.accessToken" :class="$style.rightMenus">
                 <RouterLink to="/mypage" :class="$style.menuButton">My Page</RouterLink>
                 <span @click="logout" :class="$style.menuButton">logout</span>
             </div>
@@ -19,11 +19,9 @@
 
 <script setup lang="ts">
 import {ref,reactive} from 'vue';
+import { piniaStore } from '@/store/index';
+const store = piniaStore();
 
-import { useCounterStore } from '@/store/index';
-const store = useCounterStore();
-
-let testBool = ref(true);
 
 const menuList = reactive([
 {
@@ -46,12 +44,12 @@ const menuList = reactive([
 ]);
 
 function logout() {
-    testBool.value = false;
-    alert(testBool.value);
+    store.setAccessToken("");
+    alert("로그아웃");
 }
 function storeUp() {
     store.setCount(store.count + 1);
-    testBool.value = true;
+    store.setAccessToken("sadjnkadnjk");
 }
 
 </script>
@@ -60,7 +58,7 @@ function storeUp() {
 .index {
     font-size: 18px;
     background-color: #fadaff;
-    .container {
+    .headerMain {
         margin: 0 auto;
         padding: 10px 10px;
         max-width: 1280px;

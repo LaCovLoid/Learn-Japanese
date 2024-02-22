@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia';
 
-export const useCounterStore = defineStore('counter', {
+export const piniaStore = defineStore('storeId', {
   state: () => {
     return {
       count: 0,
-      accessToken: null,
+      accessToken: "",
     }
   },
   actions: {
     setCount(value: number){
       this.count = value;
     },
+    setAccessToken(value: string){
+      this.accessToken = value;
+    }
   },
   getters: {
     getCount(state){

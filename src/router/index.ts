@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TestView from '../views/TestView.vue'
-import AboutView from '../views/AboutView.vue'
 import BeginnerView from '../views/BeginnerView.vue'
 import ChallangeView from '../views/ChallangeView.vue'
 import LoginView from '../views/LoginView.vue'
-import RegisterView from '../views/RegisterView.vue'
+import RegistView from '../views/RegistView.vue'
 import TranslateView from '../views/TranslateView.vue'
 import MyPageView from '../views/MyPageView.vue'
 
@@ -16,11 +15,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: AboutView
     },
     {
       path: '/test/:word',
@@ -44,9 +38,9 @@ const router = createRouter({
       component: LoginView
     },
     {
-      path: '/register',
-      name: 'register',
-      component: RegisterView
+      path: '/regist',
+      name: 'regist',
+      component: RegistView
     },
     {
       path: '/translate',
