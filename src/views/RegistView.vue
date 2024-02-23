@@ -18,7 +18,6 @@ import router from "@/router";
 import {ref,reactive} from 'vue';
 import {postAPI} from '../api/api';
 import {piniaStore} from '@/store/index';
-const store = piniaStore();
 
 let id = ref("");
 let password = ref("");

@@ -20,6 +20,8 @@
 <script setup lang="ts">
 import {ref,reactive} from 'vue';
 import { piniaStore } from '@/store/index';
+import { RouterLink } from 'vue-router';
+import router from '@/router';
 const store = piniaStore();
 
 
@@ -46,6 +48,7 @@ const menuList = reactive([
 function logout() {
     store.setAccessToken("");
     alert("로그아웃");
+    router.push('/');
 }
 function storeUp() {
     store.setCount(store.count + 1);

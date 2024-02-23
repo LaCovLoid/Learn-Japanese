@@ -31,7 +31,9 @@ export function getAPI(route: string, payload: any = {}): Promise<any> {
         }
         if (payload != null && payload.legnth != 0) route = route + "?" + new URLSearchParams(payload).toString();
 
-        axios.get(SERVER_ADDR + route).catch((error) => {
+        axios.get(SERVER_ADDR + route,{
+            headers: headers
+        }).catch((error) => {
             reject(error);
         }).then(response => {
             if (response == null) return;
