@@ -1,11 +1,9 @@
 <template>
     <div :class="$style.index">
         <main :class="$style.headerMain">
-            <div v-for="(item,index) in menuList" :key="index" :class="$style.menuButton">
-                <RouterLink :to="item.path"> {{ item.name }} </RouterLink>
-            </div>
-            {{ store.accessToken }}
-            <span @click="storeUp">{{ store.count }}</span>
+            <RouterLink v-for="(item,index) in menuList" :key="index" :class="$style.menuButton" :to="item.path">
+                {{ item.name }}
+            </RouterLink>
             <div v-if="store.accessToken" :class="$style.rightMenus">
                 <RouterLink to="/mypage" :class="$style.menuButton">My Page</RouterLink>
                 <span @click="logout" :class="$style.menuButton">logout</span>
@@ -18,13 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive} from 'vue';
+import {ref,reactive, computed} from 'vue';
 import { piniaStore } from '@/store/index';
 import { RouterLink } from 'vue-router';
 import router from '@/router';
 const store = piniaStore();
 
-
+let message = "";
 const menuList = reactive([
 {
         name: 'Home', //랜덤 단어
@@ -39,22 +37,31 @@ const menuList = reactive([
         path: '/challenge'
     },
     {
-        name: '초심자', //히라가나,가타카나 발음 (반응형 사이트)
+        name: '기초부터', //히라가나,가타카나 발음 (반응형 사이트)
         path: '/beginner'
     },
 
 ]);
 
-function logout() {
-    store.setAccessToken("");
-    alert("로그아웃");
-    router.push('/');
-}
-function storeUp() {
+function timeIncrease() {
     store.setCount(store.count + 1);
-    store.setAccessToken("sadjnkadnjk");
+    if (store.accessToken != "" && store.count > 600) {
+        message = "오랜시간 활동이 없어 자동으로 로그아웃됩니다.";
+        logout();
+    }
 }
 
+setInterval(() => {timeIncrease()}, 1000);
+
+function logout() {
+    if (message == "") {
+        message = "로그아웃";
+    }
+    store.setAccessToken("");
+    alert(message);
+    message="";
+    router.push('/');
+}
 </script>
 
 <style lang="scss" module>
@@ -66,7 +73,7 @@ function storeUp() {
         padding: 10px 10px;
         max-width: 1280px;
 
-        background-color: #dab5e0;
+        background-color: #fbe2ff;
         position: relative;
         .menuButton {
             margin: 0 5px;
@@ -74,8 +81,9 @@ function storeUp() {
             display: inline-block;
 
             cursor: pointer;
-            border-radius: 10px;
+            border: 1px solid #9a9a9a;
             background-color: #fceaff;
+            border-radius: 10px;
         }
         .rightMenus {
             padding-right: 10px;

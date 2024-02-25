@@ -1,46 +1,65 @@
 <template>
-  <main>
-    <div :class="$style.container"> {{time}} </div>
-    <h1 @click="increase">{{ count }}</h1>
-    <div>아아아아 {{ testText }}</div>
-  </main>
+  <div :class="$style.index">
+    <main :class="$style.homeMain">
+      {{ word }}
+      <br />
+      {{ mean }}
+      <br />
+      {{ yomigana }}
+      <br />
+      {{ example_word }}
+      <br />
+      {{ example_mean }}
+      <div v-if="word">
+        <KeyboardComponent :wordLength=yomigana.length />
+      </div>
+      
+    </main>
+  </div>
 </template>
 
 
 <script setup lang="ts">
-import {ref,reactive,computed,onMounted,onUpdated,onUnmounted} from 'vue';
+import {ref,reactive,computed} from 'vue';
+import {getAPI} from '../api/api';
+import KeyboardComponent from '../components/KeyboardComponent.vue'
 
-const time = ref(0);
-const count = ref(0);   //그냥 값 자체는 ref
+let word = ref("");
+let mean = ref("");
+let yomigana = ref("");
+let example_word = ref("");
+let example_mean = ref("");
 
-const testText = computed(()=>{ //Watch역활의 computed / watch는 받아서 작업처리에 용이
-  return time;
-})
+let apiData = getAPI("/random")
+  .then(randomFetchHandler)
+  .catch(randomFailedHandler);
 
-function timeIncrease() {
-  time.value ++;
-  if (time.value > 5) time.value = 0;
+function randomFetchHandler(response:any){
+  word.value = response.data[0].word;
+  mean.value = response.data[0].mean;
+  yomigana.value = response.data[0].yomigana;
+  example_word.value = response.data[0].example_word;
+  example_mean.value = response.data[0].example_mean;
+  console.log(word);
 }
-function increase() {
-  count.value++;
-  return "1second";
-};
 
-onMounted(()=> {
-  setInterval(() => {timeIncrease()}, 1000);
-});
-onUpdated(()=> {
-});
-onUnmounted(()=>{
-});
+function randomFailedHandler(){
+  
+}
 
-</script>
-
-<script lang="ts">
 </script>
 
 
 <style lang="scss" module>
-.container {
+.index {
+    background-color: #fadaff;
+  .homeMain {
+        margin: 0 auto;
+        padding: 10px 10px;
+        max-width: 1280px;
+
+        background-color: #b78fbe;
+    
+  }
 }
 </style>
