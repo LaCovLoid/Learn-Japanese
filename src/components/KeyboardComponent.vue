@@ -1,17 +1,17 @@
 <template>
-    <main :class="$style.index">
-        <div :class="$style.inputContainer">{{ text }}</div>
-        <div :class="$style.left">
-            <div v-for="(item,index) in hiragana" :key="index" :class="getStyleName(item)" @click="keySelected(item)">
-                {{ item }}
-            </div>
-        </div>
-        <div :class="$style.right">
-            <div v-for="(item,index) in specialKey" :key="index" :class="getStyleName(item)" @click="specialKeySelected(item)">
-                {{ item }}
-            </div>
-        </div>
-    </main>
+  <main :class="$style.index">
+    <div :class="$style.inputContainer">{{ text }}</div>
+    <div :class="$style.left">
+      <div v-for="(item,index) in hiragana" :key="index" :class="getStyleName(item)" @click="keySelected(item)">
+        {{ item }}
+      </div>
+    </div>
+    <div :class="$style.right">
+      <div v-for="(item,index) in specialKey" :key="index" :class="getStyleName(item)" @click="specialKeySelected(item)">
+        {{ item }}
+      </div>
+    </div>
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -23,161 +23,163 @@ let filled = 0;
 
 let wordLength = defineProps(['wordLength']);
 for (let i = 0; i < wordLength.wordLength; i++){
-    text.value += "□"
+  text.value += "□"
 }
 
 const specialKey = ["←", "＂", "゜", "小", "ー"];
 const hiragana:any = [
-    "あ","か","さ","た","な","は","ま","や","ら","わ",
-    "い","き","し","ち","に","ひ","み","" ,"り","" ,
-    "う","く","す","つ","ぬ","ふ","む","ゆ","る","を",
-    "え","け","せ","て","ね","へ","め","" ,"れ","" ,
-    "お","こ","そ","と","の","ほ","も","よ","ろ","ん",
+  "あ","か","さ","た","な","は","ま","や","ら","わ",
+  "い","き","し","ち","に","ひ","み","" ,"り","" ,
+  "う","く","す","つ","ぬ","ふ","む","ゆ","る","を",
+  "え","け","せ","て","ね","へ","め","" ,"れ","" ,
+  "お","こ","そ","と","の","ほ","も","よ","ろ","ん",
 ];
 
 const dakuon:any = {
-    "か":"が", "き":"ぎ", "く":"ぐ", "け":"げ", "こ":"ご",
-    "さ":"ざ", "し":"じ", "す":"ず", "せ":"ぜ", "そ":"ぞ",
-    "た":"だ", "ち":"ぢ", "つ":"づ", "て":"で", "と":"ど",
-    "は":"ば", "ひ":"び", "ふ":"ぶ", "へ":"べ", "ほ":"ぼ",
-    "が":"か", "ぎ":"き", "ぐ":"く", "げ":"け", "ご":"こ",
-    "ざ":"さ", "じ":"し", "ず":"す", "ぜ":"せ", "ぞ":"そ",
-    "だ":"た", "ぢ":"ち", "づ":"つ", "で":"て", "ど":"と",
-    "ば":"は", "び":"ひ", "ぶ":"ふ", "べ":"へ", "ぼ":"ほ",
+  "か":"が", "き":"ぎ", "く":"ぐ", "け":"げ", "こ":"ご",
+  "さ":"ざ", "し":"じ", "す":"ず", "せ":"ぜ", "そ":"ぞ",
+  "た":"だ", "ち":"ぢ", "つ":"づ", "て":"で", "と":"ど",
+  "は":"ば", "ひ":"び", "ふ":"ぶ", "へ":"べ", "ほ":"ぼ",
+  "が":"か", "ぎ":"き", "ぐ":"く", "げ":"け", "ご":"こ",
+  "ざ":"さ", "じ":"し", "ず":"す", "ぜ":"せ", "ぞ":"そ",
+  "だ":"た", "ぢ":"ち", "づ":"つ", "で":"て", "ど":"と",
+  "ば":"は", "び":"ひ", "ぶ":"ふ", "べ":"へ", "ぼ":"ほ",
 }
 const handakuon:any = {
-    "は":"ぱ", "ひ":"ぴ", "ふ":"ぷ", "へ":"ぺ", "ほ":"ぽ",
-    "ぱ":"は", "ぴ":"ひ", "ぷ":"ふ", "ぺ":"へ", "ぽ":"ほ",
+  "は":"ぱ", "ひ":"ぴ", "ふ":"ぷ", "へ":"ぺ", "ほ":"ぽ",
+  "ぱ":"は", "ぴ":"ひ", "ぷ":"ふ", "ぺ":"へ", "ぽ":"ほ",
 }
 const smallHiragana:any = {
-    "あ":"ぁ", "い":"ぃ", "う":"ぅ", "え":"ぇ", "お":"ぉ",
-    "つ":"っ",
-    "や":"ゃ", "ゆ":"ゅ", "よ":"ょ",
-    "わ":"ゎ",
-    "ぁ":"あ", "ぃ":"い", "ぅ":"う", "ぇ":"え", "ぉ":"お",
-    "っ":"つ",
-    "ゃ":"や", "ゅ":"ゆ", "ょ":"よ",
-    "ゎ":"わ",
+  "あ":"ぁ", "い":"ぃ", "う":"ぅ", "え":"ぇ", "お":"ぉ",
+  "つ":"っ",
+  "や":"ゃ", "ゆ":"ゅ", "よ":"ょ",
+  "わ":"ゎ",
+  "ぁ":"あ", "ぃ":"い", "ぅ":"う", "ぇ":"え", "ぉ":"お",
+  "っ":"つ",
+  "ゃ":"や", "ゅ":"ゆ", "ょ":"よ",
+  "ゎ":"わ",
 }
 
 function keySelected(key:string) {
-    if (key == ""){
-        return;
-    }
-    changeText(key);
+  if (key == ""){
+    return;
+  }
+  changeText(key);
 }
 
 function changeText(value:string){
-    if (text.value.length > filled) {
-        let temp = text.value.split('');
-        temp[filled] = value;
-        text.value = "";
-        filled++;
-        for (let i = 0; i < temp.length; i++){
-            text.value += temp[i];
-        }
-    } else {
-        alert("꽉 참");
+  if (text.value.length > filled) {
+    let temp = text.value.split('');
+    temp[filled] = value;
+    text.value = "";
+    filled++;
+    for (let i = 0; i < temp.length; i++){
+      text.value += temp[i];
     }
+  } else {
+    alert("꽉 참");
+  }
 }
 
 function specialKeySelected(key:string) {
-    if (filled == 0) {
-        return;
-    }
-    let dicKey:string = text.value[filled-1];
-    switch (key) {
-        case "←":
-            if (filled != 0) {filled --;}
-                changeText('□');
-                filled--;
-            break;
+  if (filled == 0) {
+      return;
+  }
+  let dicKey:string = text.value[filled-1];
+  switch (key) {
+    case "←":
+      if (filled != 0) {filled--;}
+        changeText('□');
+        filled--;
+      break;
 
-        case "＂":
-            if (dicKey in dakuon) {
-                filled--;
-                changeText(dakuon[dicKey]);
-            }
-            break;
+    case "＂":
+      if (dicKey in dakuon) {
+        filled--;
+        changeText(dakuon[dicKey]);
+      }
+      break;
 
-        case "゜":
-            if (dicKey in handakuon) {
-                filled--;
-                changeText(handakuon[dicKey]);
-            }
-            break;
-        case "小":
-        if (dicKey in smallHiragana) {
-                filled--;
-                changeText(smallHiragana[dicKey]);
-            }
-            break;
-        case "ー":
-            keySelected("ー");
-            break;
-    }
+    case "゜":
+      if (dicKey in handakuon) {
+        filled--;
+        changeText(handakuon[dicKey]);
+      }
+      break;
+
+    case "小":
+    if (dicKey in smallHiragana) {
+        filled--;
+        changeText(smallHiragana[dicKey]);
+      }
+      break;
+
+    case "ー":
+      keySelected("ー");
+      break;
+  }
 }
 
 function getStyleName(value:string):string {
-    if(value == ""){
-        return "keyboardItem noText";
-    }
-    return "keyboardItem";
+  if(value == ""){
+    return "keyboardItem noText";
+  }
+  return "keyboardItem";
 }
 </script>
 
 <style type="text/css">
 .keyboardItem {
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
-    margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 20px;
 
-    font-size: 26px;
-    text-align: center;
-    vertical-align: middle;
-    display: inline-block;
-    border: 1px solid #000000;
-    border-radius: 5px;
+  font-size: 26px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  border: 1px solid #000000;
+  border-radius: 5px;
 }
 
 .keyboardItem:hover {
-    background-color: pink;
+  background-color: pink;
 }
 .noText {
-    opacity: 0;
-    border: none;
+  opacity: 0;
+  border: none;
 }
 
 </style>
 
 <style lang="scss" module>
 .index {
-    width: 800px;
-    margin: 0 auto;
-    position: relative;
-    
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-    .inputContainer{
-        height: 100px;
-        padding-top: 20px;
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
+  
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  .inputContainer{
+    height: 100px;
+    padding-top: 20px;
 
-        font-size: 40px;
-        text-align: center;
-        background-color: aquamarine;
-    }
-    .left {
-        width: 750px;
-        display: inline-block;
-    }
-    .right {
-        width: 50px;
-        padding-right: 10px;
-        display: inline-block;
-        position: absolute;
-    }
+    font-size: 40px;
+    text-align: center;
+    background-color: aquamarine;
+  }
+  .left {
+    width: 750px;
+    display: inline-block;
+  }
+  .right {
+    width: 50px;
+    padding-right: 10px;
+    display: inline-block;
+    position: absolute;
+  }
 }
 </style>

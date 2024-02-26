@@ -13,7 +13,6 @@
       <div v-if="word">
         <KeyboardComponent :wordLength=yomigana.length />
       </div>
-      
     </main>
   </div>
 </template>
@@ -52,14 +51,12 @@ function randomFailedHandler(){
 
 <style lang="scss" module>
 .index {
-    background-color: #fadaff;
+  background-color: #fadaff;
   .homeMain {
-        margin: 0 auto;
-        padding: 10px 10px;
-        max-width: 1280px;
-
-        background-color: #b78fbe;
-    
+    margin: 0 auto;
+    padding: 10px 10px;
+    max-width: 1280px;
+    background-color: #b78fbe;
   }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.container">
-        {{ word }} 링크에 접속
-    </div>
+  <div :class="$style.container">
+    {{ word }} 링크에 접속
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,6 +14,6 @@ const word = ref(route.params.word);
 
 <style lang="scss" module>
 .container {
-    font-size: 60px;
+  font-size: 60px;
 }
 </style>

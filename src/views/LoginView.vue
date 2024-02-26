@@ -26,55 +26,55 @@ let id = ref("");
 let password = ref("");
 
 function onSubmit() {
-    postAPI("/login",{
-        id: id,
-        password: password,
-    })
-    .then(loginFetchHandler)
-    .catch(loginFailedHandler);
+  postAPI("/login",{
+    id: id,
+    password: password,
+  })
+  .then(loginFetchHandler)
+  .catch(loginFailedHandler);
 }
 
 function loginFetchHandler(response: any){
-    //아이디도 store에 보관해서 활용 ex)닉넴과 토큰값이 동시에 같은지? 혹은 닉넴님~어서오세요
-    //아냐 받는값이 엑세스토큰이라 db를 새로 만들어야해
-    store.setAccessToken(response.data);
-    router.push("/");
+  //아이디도 store에 보관해서 활용 ex)닉넴과 토큰값이 동시에 같은지? 혹은 닉넴님~어서오세요
+  //아냐 받는값이 엑세스토큰이라 db를 새로 만들어야해
+  store.setAccessToken(response.data);
+  router.push("/");
 }
 function loginFailedHandler(){
-    alert("로그인 실패");
-    return;
+  alert("로그인 실패");
+  return;
 }
 
 </script>
 
 <style lang="scss" module>
 .index {
-    background-color: #f0ffff;
-    .loginMain {
-        margin: 0 auto;
-        max-width: 1280px;
+  background-color: #f0ffff;
+  .loginMain {
+    margin: 0 auto;
+    max-width: 1280px;
 
-        text-align: center;
-        vertical-align:middle;
-        background-color: #ffdefd;
+    text-align: center;
+    vertical-align:middle;
+    background-color: #ffdefd;
 
-        .inputId {
-            margin-top: 100px;
-            font-size: 20px;
-        }
-        .inputPassword {
-            margin-top: 10px;
-            font-size: 20px;
-        }
-        .loginButton {
-            margin-top: 10px;
-            padding: 10px 15px;
-            display: inline-block;
-            background-color: #ffffff;
-
-            border: #000000 solid 2px;
-            border-radius: 5px;
-        }
+    .inputId {
+      margin-top: 100px;
+      font-size: 20px;
     }
+    .inputPassword {
+      margin-top: 10px;
+      font-size: 20px;
+    }
+    .loginButton {
+      margin-top: 10px;
+      padding: 10px 15px;
+      display: inline-block;
+      background-color: #ffffff;
+
+      border: #000000 solid 2px;
+      border-radius: 5px;
+    }
+  }
 }
 </style>
