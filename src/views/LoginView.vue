@@ -17,9 +17,9 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import {ref} from 'vue';
-import {postAPI} from '../api/api';
-import {piniaStore} from '@/store/index';
+import { ref } from 'vue';
+import { postAPI } from '../api/api';
+import { piniaStore } from '@/store/index';
 const store = piniaStore();
 
 let id = ref("");
@@ -47,9 +47,9 @@ function loginFailedHandler(){
 </script>
 
 <style lang="scss" module>
-.index {
+.index{
   background-color: #f0ffff;
-  .loginMain {
+  .loginMain{
     margin: 0 auto;
     max-width: 1280px;
 
@@ -57,15 +57,15 @@ function loginFailedHandler(){
     vertical-align:middle;
     background-color: #ffdefd;
 
-    .inputId {
+    .inputId{
       margin-top: 100px;
       font-size: 20px;
     }
-    .inputPassword {
+    .inputPassword{
       margin-top: 10px;
       font-size: 20px;
     }
-    .loginButton {
+    .loginButton{
       margin-top: 10px;
       padding: 10px 15px;
       display: inline-block;

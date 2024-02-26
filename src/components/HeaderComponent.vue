@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive, computed} from 'vue';
+import { reactive } from 'vue';
 import { piniaStore } from '@/store/index';
 import { RouterLink } from 'vue-router';
 import router from '@/router';
@@ -41,18 +41,18 @@ const menuList = reactive([
   path: '/beginner'
 },]);
 
-function timeIncrease() {
+function timeIncrease(){
   store.setCount(store.count + 1);
-  if (store.accessToken != "" && store.count > 600) {
+  if (store.accessToken != "" && store.count > 600){
     message = "오랜시간 활동이 없어 자동으로 로그아웃됩니다.";
     logout();
   }
 }
 
-setInterval(() => {timeIncrease()}, 1000);
+setInterval(() =>{timeIncrease()}, 1000);
 
-function logout() {
-  if (message == "") {
+function logout(){
+  if (message == ""){
     message = "로그아웃";
   }
   store.setAccessToken("");
@@ -63,17 +63,20 @@ function logout() {
 </script>
 
 <style lang="scss" module>
-.index {
+.index{
+  padding-top: 30px;
   font-size: 18px;
-  background-color: #fadaff;
-  .headerMain {
+    background-color: #fadaff;
+  .headerMain{
     margin: 0 auto;
     padding: 10px 10px;
     max-width: 1280px;
 
-    background-color: #fbe2ff;
+    background-color: #ff84da;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     position: relative;
-    .menuButton {
+    .menuButton{
       margin: 0 5px;
       padding: 5px 10px;
       display: inline-block;
@@ -83,7 +86,7 @@ function logout() {
       background-color: #fceaff;
       border-radius: 10px;
     }
-    .rightMenus {
+    .rightMenus{
       padding-right: 10px;
       display: inline-block; 
       position: absolute;

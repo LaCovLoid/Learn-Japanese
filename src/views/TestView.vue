@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const word = ref(route.params.word);
@@ -13,7 +13,7 @@ const word = ref(route.params.word);
 </script>
 
 <style lang="scss" module>
-.container {
+.container{
   font-size: 60px;
 }
 </style>

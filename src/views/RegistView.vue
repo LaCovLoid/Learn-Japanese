@@ -15,8 +15,8 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import {ref} from 'vue';
-import {postAPI} from '../api/api';
+import { ref } from 'vue';
+import { postAPI } from '../api/api';
 
 let id = ref("");
 let password = ref("");
@@ -48,9 +48,9 @@ function registFailedHandler(){
 </script>
 
 <style lang="scss" module>
-.index {
+.index{
   background-color: #f0ffff;
-  .registMain {
+  .registMain{
     margin: 0 auto;
     max-width: 1280px;
 
@@ -58,15 +58,15 @@ function registFailedHandler(){
     vertical-align:middle;
     background-color: #ffdefd;
 
-    .inputId {
+    .inputId{
       margin-top: 100px;
       font-size: 20px;
     }
-    .inputPassword {
+    .inputPassword{
       margin-top: 10px;
       font-size: 20px;
     }
-    .registButton {
+    .registButton{
       margin-top: 10px;
       padding: 10px 15px;
       display: inline-block;

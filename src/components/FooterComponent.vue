@@ -10,15 +10,17 @@
 </script>
 
 <style lang="scss" module>
-.index {
+.index{
   background-color: #fadaff;
-  .footerMain {
+  .footerMain{
     margin: 0 auto;
     padding: 10px 10px;
     max-width: 1280px;
 
-    background-color: #fbe2ff;
-    .maked {
+    background-color: #e9fbff;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    .maked{
       color: #5c5c5c;
       font-size: 12px;
     }

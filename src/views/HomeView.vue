@@ -1,17 +1,23 @@
 <template>
   <div :class="$style.index">
-    <main :class="$style.homeMain">
-      {{ word }}
-      <br />
-      {{ mean }}
-      <br />
-      {{ yomigana }}
-      <br />
-      {{ example_word }}
-      <br />
-      {{ example_mean }}
+    <main :class="$style.homeMain" v-if="visibleBoolean">
+      <div :class="$style.description">
+        {{ word }} {{ mean }}
+        <div :class="$style.retryButton" @click="retry">
+          다른 문제
+        </div>
+      </div>
       <div v-if="word">
-        <KeyboardComponent :wordLength=yomigana.length />
+        <QuestionComponent :yomiganaLength=yomiganaLength :wordId=wordId @sendingData="answerCheck" />
+      </div>
+    </main>
+    <main :class="$style.homeMain" v-else>
+      <div :class="$style.retryButton" @click="retry">
+        다른 문제
+      </div>
+      <div :class="$style.congrate" v-if="isAnswer">
+        문제를 푸셨습니다!<br /><br />
+        축하합니다!
       </div>
     </main>
   </div>
@@ -19,44 +25,93 @@
 
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import {getAPI} from '../api/api';
-import KeyboardComponent from '../components/KeyboardComponent.vue'
+import { ref } from 'vue';
+import { getAPI } from '../api/api';
+import QuestionComponent from '../components/QuestionComponent.vue';
 
+let wordId = ref(-1);
 let word = ref("");
 let mean = ref("");
-let yomigana = ref("");
-let example_word = ref("");
-let example_mean = ref("");
+let yomiganaLength = ref("");
+let visibleBoolean = ref(true);
+let isAnswer = ref(false);
 
-getAPI("/random")
-  .then(randomFetchHandler)
-  .catch(randomFailedHandler);
+getQuestion();
 
-function randomFetchHandler(response:any){
-  word.value = response.data[0].word;
-  mean.value = response.data[0].mean;
-  yomigana.value = response.data[0].yomigana;
-  example_word.value = response.data[0].example_word;
-  example_mean.value = response.data[0].example_mean;
-  console.log(word);
+function getQuestion(){
+  getAPI("/random")
+    .then(randomFetchHandler)
+    .catch(randomFailedHandler);
+
+  function randomFetchHandler(response:any){
+    wordId.value = response.data.word_id;
+    word.value = response.data.word;
+    mean.value = response.data.mean;
+    yomiganaLength.value = response.data.yomigana_length;
+  }
+  function randomFailedHandler(){
+    alert('정보를 받아올 수 없습니다.');
+  }
 }
 
-function randomFailedHandler(){
-  alert('정보를 받아올 수 없습니다.');
+function answerCheck(data:any) {
+  isAnswer.value = data;
+  if (isAnswer.value) {
+    visibleBoolean.value = false;
+  }
 }
 
+function retry(){
+  visibleBoolean.value = true;
+  isAnswer.value = false;
+  word.value = "";
+  getQuestion();
+}
 </script>
 
 
 <style lang="scss" module>
-.index {
+.index{
   background-color: #fadaff;
-  .homeMain {
+  .homeMain{
     margin: 0 auto;
     padding: 10px 10px;
     max-width: 1280px;
-    background-color: #b78fbe;
+    background-color: #ffffff;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+
+    .description{
+      margin: 30px 0;
+      font-size: 28px;
+      text-align: center;
+
+    }
+
+    .congrate{
+      width: 100%;
+      text-align: center;
+      margin: 100px 0;
+
+      display: block;
+      font-size: 40px;
+      font-weight: bold;
+      position: relative;
+    }
+  }
+  .retryButton{
+    margin: auto;
+    padding: 5px 8px;
+
+    border: 1px solid #000000;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+    cursor: pointer;
+    position:absolute;
+    right: 50px;
   }
 }
 </style>

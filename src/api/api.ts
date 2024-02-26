@@ -30,7 +30,6 @@ export function getAPI(route: string, payload: any = {}): Promise<any> {
       headers["Access-Token"] = store.accessToken;
     }
     if (payload != null && payload.legnth != 0) route = route + "?" + new URLSearchParams(payload).toString();
-
     axios.get(SERVER_ADDR + route,{
       headers: headers
     }).catch((error) => {
