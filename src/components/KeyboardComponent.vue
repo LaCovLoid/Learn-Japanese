@@ -40,8 +40,6 @@ const dakuon:any = {
     "さ":"ざ", "し":"じ", "す":"ず", "せ":"ぜ", "そ":"ぞ",
     "た":"だ", "ち":"ぢ", "つ":"づ", "て":"で", "と":"ど",
     "は":"ば", "ひ":"び", "ふ":"ぶ", "へ":"べ", "ほ":"ぼ",
-}
-const dakuonInverse:any = {
     "が":"か", "ぎ":"き", "ぐ":"く", "げ":"け", "ご":"こ",
     "ざ":"さ", "じ":"し", "ず":"す", "ぜ":"せ", "ぞ":"そ",
     "だ":"た", "ぢ":"ち", "づ":"つ", "で":"て", "ど":"と",
@@ -49,8 +47,6 @@ const dakuonInverse:any = {
 }
 const handakuon:any = {
     "は":"ぱ", "ひ":"ぴ", "ふ":"ぷ", "へ":"ぺ", "ほ":"ぽ",
-}
-const handakuonInverse:any = {
     "ぱ":"は", "ぴ":"ひ", "ぷ":"ふ", "ぺ":"へ", "ぽ":"ほ",
 }
 const smallHiragana:any = {
@@ -58,8 +54,6 @@ const smallHiragana:any = {
     "つ":"っ",
     "や":"ゃ", "ゆ":"ゅ", "よ":"ょ",
     "わ":"ゎ",
-}
-const smallHiraganaInverse:any = {
     "ぁ":"あ", "ぃ":"い", "ぅ":"う", "ぇ":"え", "ぉ":"お",
     "っ":"つ",
     "ゃ":"や", "ゅ":"ゆ", "ょ":"よ",
@@ -88,6 +82,10 @@ function changeText(value:string){
 }
 
 function specialKeySelected(key:string) {
+    if (filled == 0) {
+        return;
+    }
+    let dicKey:string = text.value[filled-1];
     switch (key) {
         case "←":
             if (filled != 0) {filled --;}
@@ -96,24 +94,26 @@ function specialKeySelected(key:string) {
             break;
 
         case "＂":
-            // eslint-disable-next-line no-case-declarations
-            let dicKey:string = text.value[filled-1];
-            
             if (dicKey in dakuon) {
                 filled--;
                 changeText(dakuon[dicKey]);
-            } else if (dicKey in dakuonInverse) {
-                filled--;
-                changeText(dakuonInverse[dicKey]);
             }
-            
             break;
 
         case "゜":
+            if (dicKey in handakuon) {
+                filled--;
+                changeText(handakuon[dicKey]);
+            }
             break;
         case "小":
+        if (dicKey in smallHiragana) {
+                filled--;
+                changeText(smallHiragana[dicKey]);
+            }
             break;
         case "ー":
+            keySelected("ー");
             break;
     }
 }
