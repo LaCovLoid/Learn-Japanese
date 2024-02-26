@@ -1,23 +1,23 @@
 <template>
-    <div :class="$style.index">
-        <main :class="$style.loginMain">
-            <input :class="$style.inputId" placeholder="아이디" v-model="id">
-            <br/>
-            <input type="password" placeholder="비밀번호" :class="$style.inputPassword" v-model="password">
-            <br/>
-            <span :class="$style.loginButton" @click="onSubmit">로그인</span>
-            <hr>
-            <div :class="$style.kakaoLogin">
-                카카오오오
-            </div>
-            <RouterLink to="/regist" :class="$style.linkToRegist">회원 가입</RouterLink>
-        </main>
-    </div>
+  <div :class="$style.index">
+    <main :class="$style.loginMain">
+      <input :class="$style.inputId" placeholder="아이디" v-model="id">
+      <br/>
+      <input type="password" placeholder="비밀번호" :class="$style.inputPassword" v-model="password">
+      <br/>
+      <span :class="$style.loginButton" @click="onSubmit">로그인</span>
+      <hr>
+      <div :class="$style.kakaoLogin">
+        카카오오오
+      </div>
+      <RouterLink to="/regist" :class="$style.linkToRegist">회원 가입</RouterLink>
+    </main>
+  </div>
 </template>
 
 <script setup lang="ts">
 import router from "@/router";
-import {ref,reactive} from 'vue';
+import {ref} from 'vue';
 import {postAPI} from '../api/api';
 import {piniaStore} from '@/store/index';
 const store = piniaStore();
@@ -44,7 +44,6 @@ function loginFailedHandler(){
   alert("로그인 실패");
   return;
 }
-
 </script>
 
 <style lang="scss" module>

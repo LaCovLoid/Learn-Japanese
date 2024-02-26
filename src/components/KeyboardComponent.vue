@@ -15,7 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref,reactive,defineProps,defineEmits} from 'vue';
+import {ref} from 'vue';
+import {specialKey,hiragana,dakuon,handakuon,smallHiragana} from '../assets/hiragana';
 
 
 let text = ref("");
@@ -24,40 +25,6 @@ let filled = 0;
 let wordLength = defineProps(['wordLength']);
 for (let i = 0; i < wordLength.wordLength; i++){
   text.value += "□"
-}
-
-const specialKey = ["←", "＂", "゜", "小", "ー"];
-const hiragana:any = [
-  "あ","か","さ","た","な","は","ま","や","ら","わ",
-  "い","き","し","ち","に","ひ","み","" ,"り","" ,
-  "う","く","す","つ","ぬ","ふ","む","ゆ","る","を",
-  "え","け","せ","て","ね","へ","め","" ,"れ","" ,
-  "お","こ","そ","と","の","ほ","も","よ","ろ","ん",
-];
-
-const dakuon:any = {
-  "か":"が", "き":"ぎ", "く":"ぐ", "け":"げ", "こ":"ご",
-  "さ":"ざ", "し":"じ", "す":"ず", "せ":"ぜ", "そ":"ぞ",
-  "た":"だ", "ち":"ぢ", "つ":"づ", "て":"で", "と":"ど",
-  "は":"ば", "ひ":"び", "ふ":"ぶ", "へ":"べ", "ほ":"ぼ",
-  "が":"か", "ぎ":"き", "ぐ":"く", "げ":"け", "ご":"こ",
-  "ざ":"さ", "じ":"し", "ず":"す", "ぜ":"せ", "ぞ":"そ",
-  "だ":"た", "ぢ":"ち", "づ":"つ", "で":"て", "ど":"と",
-  "ば":"は", "び":"ひ", "ぶ":"ふ", "べ":"へ", "ぼ":"ほ",
-}
-const handakuon:any = {
-  "は":"ぱ", "ひ":"ぴ", "ふ":"ぷ", "へ":"ぺ", "ほ":"ぽ",
-  "ぱ":"は", "ぴ":"ひ", "ぷ":"ふ", "ぺ":"へ", "ぽ":"ほ",
-}
-const smallHiragana:any = {
-  "あ":"ぁ", "い":"ぃ", "う":"ぅ", "え":"ぇ", "お":"ぉ",
-  "つ":"っ",
-  "や":"ゃ", "ゆ":"ゅ", "よ":"ょ",
-  "わ":"ゎ",
-  "ぁ":"あ", "ぃ":"い", "ぅ":"う", "ぇ":"え", "ぉ":"お",
-  "っ":"つ",
-  "ゃ":"や", "ゅ":"ゆ", "ょ":"よ",
-  "ゎ":"わ",
 }
 
 function keySelected(key:string) {
@@ -92,28 +59,24 @@ function specialKeySelected(key:string) {
         changeText('□');
         filled--;
       break;
-
     case "＂":
       if (dicKey in dakuon) {
         filled--;
         changeText(dakuon[dicKey]);
       }
       break;
-
     case "゜":
       if (dicKey in handakuon) {
         filled--;
         changeText(handakuon[dicKey]);
       }
       break;
-
     case "小":
     if (dicKey in smallHiragana) {
         filled--;
         changeText(smallHiragana[dicKey]);
       }
       break;
-
     case "ー":
       keySelected("ー");
       break;
@@ -142,7 +105,6 @@ function getStyleName(value:string):string {
   border: 1px solid #000000;
   border-radius: 5px;
 }
-
 .keyboardItem:hover {
   background-color: pink;
 }
@@ -150,7 +112,6 @@ function getStyleName(value:string):string {
   opacity: 0;
   border: none;
 }
-
 </style>
 
 <style lang="scss" module>

@@ -19,7 +19,7 @@
 
 
 <script setup lang="ts">
-import {ref,reactive,computed} from 'vue';
+import {ref} from 'vue';
 import {getAPI} from '../api/api';
 import KeyboardComponent from '../components/KeyboardComponent.vue'
 
@@ -29,7 +29,7 @@ let yomigana = ref("");
 let example_word = ref("");
 let example_mean = ref("");
 
-let apiData = getAPI("/random")
+getAPI("/random")
   .then(randomFetchHandler)
   .catch(randomFailedHandler);
 
@@ -43,7 +43,7 @@ function randomFetchHandler(response:any){
 }
 
 function randomFailedHandler(){
-  
+  alert('정보를 받아올 수 없습니다.');
 }
 
 </script>

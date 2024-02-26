@@ -15,9 +15,8 @@
 
 <script setup lang="ts">
 import router from "@/router";
-import {ref,reactive} from 'vue';
+import {ref} from 'vue';
 import {postAPI} from '../api/api';
-import {piniaStore} from '@/store/index';
 
 let id = ref("");
 let password = ref("");
