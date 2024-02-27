@@ -6,20 +6,21 @@
       <input type="password" placeholder="비밀번호" :class="$style.inputPassword" v-model="password">
       <br/>
       <span :class="$style.loginButton" @click="onSubmit">로그인</span>
-      <hr>
-      <div :class="$style.kakaoLogin">
-        카카오오오
-      </div>
-      <RouterLink to="/regist" :class="$style.linkToRegist">회원 가입</RouterLink>
+      <br/>
+      <RouterLink to="/regist" :class="$style.regist">회원 가입</RouterLink>
     </main>
   </div>
 </template>
 
+
 <script setup lang="ts">
+
 import router from "@/router";
 import { ref } from 'vue';
 import { postAPI } from '../api/api';
 import { piniaStore } from '@/store/index';
+
+
 const store = piniaStore();
 
 let id = ref("");
@@ -46,16 +47,21 @@ function loginFailedHandler(){
 }
 </script>
 
+
 <style lang="scss" module>
 .index{
-  background-color: #f0ffff;
+  background-color: #ffdefd;
+  padding-bottom: 100px;
   .loginMain{
     margin: 0 auto;
     max-width: 1280px;
+    padding-bottom: 30px;
 
     text-align: center;
     vertical-align:middle;
-    background-color: #ffdefd;
+    background-color: #ffffff;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 
     .inputId{
       margin-top: 100px;
@@ -66,13 +72,21 @@ function loginFailedHandler(){
       font-size: 20px;
     }
     .loginButton{
-      margin-top: 10px;
+      margin-top: 50px;
       padding: 10px 15px;
       display: inline-block;
-      background-color: #ffffff;
+      background-color: #ffeeee;
 
       border: #000000 solid 2px;
       border-radius: 5px;
+      cursor: pointer;
+    }
+    .regist{
+      margin-top: 50px;
+      margin-left: 80%;
+      padding: 2px 3px;
+      display: inline-block;
+      border: 1px solid #000000;
     }
   }
 }

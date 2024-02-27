@@ -56,16 +56,15 @@ function getQuestion(){
   getAPI("/random")
     .then(randomFetchHandler)
     .catch(randomFailedHandler);
-
-  function randomFetchHandler(response:any){
-    wordId.value = response.data.word_id;
-    word.value = response.data.word;
-    mean.value = response.data.mean;
-    yomiganaLength.value = response.data.yomigana_length;
-  }
-  function randomFailedHandler(){
-    alert('정보를 받아올 수 없습니다.');
-  }
+}
+function randomFetchHandler(response:any){
+  wordId.value = response.data.word_id;
+  word.value = response.data.word;
+  mean.value = response.data.mean;
+  yomiganaLength.value = response.data.yomigana_length;
+}
+function randomFailedHandler(){
+  alert('정보를 받아올 수 없습니다.');
 }
 
 function answerCheck(data:any) {
