@@ -6,6 +6,9 @@
         <div :class="$style.retryButton" @click="retry">
           다른 문제
         </div>
+        <div :class="[$style.retryButton, $style.answerButton]" @click="viewAnswer">
+          정답보기
+        </div>
       </div>
       <div v-if="word">
         <QuestionComponent :yomiganaLength=yomiganaLength :wordId=wordId @sendingData="answerCheck" />
@@ -18,6 +21,16 @@
       <div :class="$style.congrate" v-if="isAnswer">
         문제를 푸셨습니다!<br /><br />
         축하합니다!
+      </div>
+      <div :class="$style.congrate" v-else >
+        {{ word }}
+        <br />
+        {{ yomigana }}
+        <br />
+        {{ mean }}
+        <br />
+        <br />
+        문제를 풀지 못하였습니다.
       </div>
     </main>
   </div>
@@ -32,6 +45,7 @@ import QuestionComponent from '../components/QuestionComponent.vue';
 let wordId = ref(-1);
 let word = ref("");
 let mean = ref("");
+let yomigana = ref("");
 let yomiganaLength = ref("");
 let visibleBoolean = ref(true);
 let isAnswer = ref(false);
@@ -67,12 +81,26 @@ function retry(){
   word.value = "";
   getQuestion();
 }
+function viewAnswer() {
+  getAPI("/answer",{wordId:wordId.value})
+  .then(answerFetchHandler)
+  .catch(answerFailedHandler);
+}
+function answerFetchHandler(response:any) {
+  yomigana.value = response.data.yomigana;
+  visibleBoolean.value = false;
+  isAnswer.value = false;
+}
+function answerFailedHandler() {
+  alert("정답을 불러오는데 실패하였습니다.");
+}
 </script>
 
 
 <style lang="scss" module>
 .index{
   background-color: #fadaff;
+  padding-bottom: 30px;
   .homeMain{
     margin: 0 auto;
     padding: 10px 10px;
@@ -101,6 +129,7 @@ function retry(){
     }
   }
   .retryButton{
+    width: 130px;
     margin: auto;
     padding: 5px 8px;
 
@@ -111,7 +140,11 @@ function retry(){
     display: inline-block;
     cursor: pointer;
     position:absolute;
+    top: 50px;
     right: 50px;
+  }
+  .answerButton{
+    top: 100px;
   }
 }
 </style>

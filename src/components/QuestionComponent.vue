@@ -101,7 +101,7 @@ function answerSubmit() {
 
 function checkFetchHandler(response:any){
   let isAnswer = response.data.isAnswer;
-  alert(isAnswer);
+  alert(isAnswer? "정답" : "오답");
   emits('sendingData', isAnswer);
 }
 function checkFailedHandler(){
@@ -116,6 +116,7 @@ function checkFailedHandler(){
   height: 50px;
   margin-top: 10px;
   margin-right: 20px;
+  padding-top: 5px;
 
   font-size: 26px;
   text-align: center;
@@ -145,6 +146,7 @@ function checkFailedHandler(){
   user-select:none;
   .inputContainer{
     height: 100px;
+    margin-bottom: 30px;
     padding-top: 20px;
 
     font-size: 40px;
@@ -164,7 +166,8 @@ function checkFailedHandler(){
   .submitButton{
     width: 80px;
     height: 40px;
-    margin-top: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     margin-left: calc(50% - 40px);
     padding-top: 8px;
 

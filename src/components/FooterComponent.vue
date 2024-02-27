@@ -11,15 +11,12 @@
 
 <style lang="scss" module>
 .index{
-  background-color: #fadaff;
+  background-color: #f4fdff;
+  border-top: 3px solid #c6c6c6;
   .footerMain{
     margin: 0 auto;
     padding: 10px 10px;
     max-width: 1280px;
-
-    background-color: #e9fbff;
-    border-top-right-radius: 20px;
-    border-top-left-radius: 20px;
     .maked{
       color: #5c5c5c;
       font-size: 12px;
