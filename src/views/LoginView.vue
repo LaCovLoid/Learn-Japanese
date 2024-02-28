@@ -15,9 +15,9 @@
 
 <script setup lang="ts">
 
-import router from "@/router";
 import { ref } from 'vue';
-import { postAPI } from '../api/api';
+import router from "@/router";
+import { postAPI } from '@/api/api';
 import { piniaStore } from '@/store/index';
 
 
@@ -35,7 +35,7 @@ function onSubmit() {
   .catch(loginFailedHandler);
 }
 
-function loginFetchHandler(response: any){
+function loginFetchHandler(response:any){
   //아이디도 store에 보관해서 활용 ex)닉넴과 토큰값이 동시에 같은지? 혹은 닉넴님~어서오세요
   //아냐 받는값이 엑세스토큰이라 db를 새로 만들어야해
   store.setAccessToken(response.data);

@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import { getAPI } from '@/api/api';
 import { ref } from 'vue';
+import { getAPI } from '@/api/api';
 
 let selected = ref(0);
 let resultText = ref("");

@@ -17,8 +17,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { specialKey,hiragana,dakuon,handakuon,smallHiragana } from '../assets/hiragana';
 import { getAPI } from '@/api/api';
+import { specialKey,hiragana,dakuon,handakuon,smallHiragana } from '@/assets/hiragana';
 
 let props = defineProps(['yomiganaLength','wordId']);
 let wordId = props.wordId;
@@ -105,7 +105,7 @@ function checkFetchHandler(response:any){
   emits('sendingData', isAnswer);
 }
 function checkFailedHandler(){
-  //값이 틀린게 아니라 값을 못받아올때 코드
+  alert("서버 연결 에러");
 }
 
 </script>

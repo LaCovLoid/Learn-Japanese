@@ -17,12 +17,12 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { piniaStore } from '@/store/index';
 import { RouterLink } from 'vue-router';
+import { piniaStore } from '@/store/index';
 import router from '@/router';
-const store = piniaStore();
 
 let message = "";
+const store = piniaStore();
 const menuList = reactive([
 {
   name: 'Home', //랜덤 단어
@@ -41,6 +41,8 @@ const menuList = reactive([
   path: '/beginner'
 },]);
 
+setInterval(() =>{timeIncrease()}, 1000);
+
 function timeIncrease(){
   store.setCount(store.count + 1);
   if (store.accessToken != "" && store.count > 600){
@@ -48,8 +50,6 @@ function timeIncrease(){
     logout();
   }
 }
-
-setInterval(() =>{timeIncrease()}, 1000);
 
 function logout(){
   if (message == ""){

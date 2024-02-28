@@ -7,6 +7,15 @@
         <span :class="getStyle(1)" @click="menuClicked(1)">즐겨찾기</span>
       </div>
       <div :class="$style.wordContainer" v-if="menuSelected == 0">
+        <!-- 이거 컴포넌트로 넣는게 좋을거같음
+          즐찾 누르면 컴포넌트에서 값 받는걸로 바로 어케든 해보셈
+          글구 중요한거. 클릭 누르면 routerView로 연결해서 단어 상세보기
+          상세보기는 chatGPT(3.5 무료) 써서 '~~ 상세 뜻' 출력 
+
+          1.챌린지 제대로 만들고 랭킹시스템 & DB 작성
+          2.마이페이지 정리&컴포넌트 작성
+          3.석탄이한테 카톡로그인 도움
+        -->
         <div v-for="(item,index) in resolve" :key="index">
           {{ item.word }}
         </div>
@@ -21,10 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref,reactive } from 'vue';
-import { getAPI } from '../api/api';
-import { piniaStore } from '@/store/index';
+import { ref } from 'vue';
 import router from '@/router';
+import { getAPI } from '@/api/api';
+import { piniaStore } from '@/store/index';
+
 const store = piniaStore();
 
 let resolve:any = [];
@@ -50,6 +60,7 @@ function userInfoFetchHandler(response:any) {
     for (var j = 0; j < resolve.length; j++) {
       if (resolve[j].id == favoriteNumbers[i]){
         favorite.push(resolve[j]);
+        return;
       }
     }
   }

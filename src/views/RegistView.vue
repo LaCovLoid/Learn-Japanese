@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
 import { ref } from 'vue';
-import { postAPI } from '../api/api';
+import router from "@/router";
+import { postAPI } from '@/api/api';
 
 let id = ref("");
 let password = ref("");
