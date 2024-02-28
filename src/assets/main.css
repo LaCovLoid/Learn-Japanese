@@ -7,16 +7,16 @@
   font-weight: normal;
 }
 
-body{
-	margin: 0;
-	/*overflow: hidden;*/
+body {
+  margin: 0;
+  min-width: 900px;
 }
 
-a{
+a {
   color: #000000;
   text-decoration: none;
   transition: 0.4s;
-  
+
   &.router-link-exact-active {
     color: #42b983;
   }

@@ -1,11 +1,10 @@
 
 <template>
-  
-  <div @click="handleClick">
-    <HeaderComponent />
-    <RouterView /> <!--그 라우터 주소에 따라 상황에 맞는 view를 출력함-->
-    <FooterComponent />
-  </div>
+    <div @click="handleClick">
+        <HeaderComponent />
+        <RouterView /> <!--그 라우터 주소에 따라 상황에 맞는 view를 출력함-->
+        <FooterComponent />
+    </div>
 </template>
 
 
