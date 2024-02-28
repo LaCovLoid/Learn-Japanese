@@ -7,23 +7,13 @@
         <span :class="getStyle(1)" @click="menuClicked(1)">즐겨찾기</span>
       </div>
       <div :class="$style.wordContainer" v-if="menuSelected == 0">
-        <!-- 이거 컴포넌트로 넣는게 좋을거같음
-          즐찾 누르면 컴포넌트에서 값 받는걸로 바로 어케든 해보셈
-          글구 중요한거. 클릭 누르면 routerView로 연결해서 단어 상세보기
+        <!-- 클릭 누르면 routerView로 연결해서 단어 상세보기
           상세보기는 chatGPT(3.5 무료) 써서 '~~ 상세 뜻' 출력 
-
-          1.챌린지 제대로 만들고 랭킹시스템 & DB 작성
-          2.마이페이지 정리&컴포넌트 작성
-          3.석탄이한테 카톡로그인 도움
         -->
-        <div v-for="(item,index) in resolve" :key="index">
-          {{ item.word }}
-        </div>
+        <wordComponent v-for="(item,index) in resolve" :key="index" :propData="item" @sendingData="changeFavorite"/>
       </div>
       <div :class="$style.wordContainer" v-if="menuSelected == 1">
-        <div v-for="(item,index) in favorite" :key="index">
-          {{ item.word }}
-        </div>
+        <wordComponent v-for="(item,index) in favorite" :key="index" :propData="item" @sendingData="changeFavorite"/>
       </div>
     </main>
   </div>
@@ -34,6 +24,7 @@ import { ref } from 'vue';
 import router from '@/router';
 import { getAPI } from '@/api/api';
 import { piniaStore } from '@/store/index';
+import wordComponent from '@/components/wordComponent.vue';
 
 const store = piniaStore();
 
@@ -60,13 +51,51 @@ function userInfoFetchHandler(response:any) {
     for (var j = 0; j < resolve.length; j++) {
       if (resolve[j].id == favoriteNumbers[i]){
         favorite.push(resolve[j]);
-        return;
+        resolve[j]['favorite'] = 1;
+        favorite[i]['favorite'] = 1;
       }
     }
   }
 }
 function userInfoFailedHandler() {
+  alert("잘못된 유저정보입니다.");
+  router.push('/');
+}
 
+function changeFavorite(data:any) {
+  getAPI('/modify_favorite', {wordId: data.id})
+    .then(modifyFetchHandler)
+    .catch(modifyFailedHandler);
+  
+  let idExist = false;
+  for (let i = 0; i < favorite.length; i++) {
+    if (favorite[i].id == data.id) {
+      favorite.splice(i, 1);
+      idExist = true;
+      return;
+    }
+  }
+  if (!idExist) {
+    for (let i = 0; i < resolve.length; i++) {
+      if (resolve[i].id == data.id) {
+        favorite.push(resolve[i]);
+        return;
+      }
+    }
+  }
+
+  //양쪽에서 클릭하고 새로고침하면 나오는 버그  (두번누르니 작동안하는버그같음) 혹은 두번이상누르면 첫번째것만인정되는걸지도
+  //코드 다듬기
+  //기초부터 페이지 제작 && 즐겨찾기와 모든단어 단어수 20개씩 페이지 나누기
+  //UI개선 && 단어 눌렀을때 chatGPT로 상세 뜻 적어주는 페이지 띄우기
+  //포폴만들준비
+}
+
+function modifyFetchHandler(response:any) {
+}
+function modifyFailedHandler() {
+  alert("error");
+  router.push('/');
 }
 
 function getStyle(value: number) {
