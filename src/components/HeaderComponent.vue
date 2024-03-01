@@ -35,11 +35,7 @@ const menuList = reactive([
 {
   name: '챌린지', //시간제한있음, 랭킹시스템 있음
   path: '/challenge'
-},
-{
-  name: '기초부터', //히라가나,가타카나 발음 (반응형 사이트)
-  path: '/beginner'
-},]);
+}]);
 
 setInterval(() =>{timeIncrease()}, 1000);
 

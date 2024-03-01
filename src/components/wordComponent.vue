@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <img :src="getSrc()" alt="" :class="$style.star" @click="favoriteClicked"/>
-    {{word.word}}
-    {{word.mean}}
-    {{word.yomigana}}
-    {{word.example_word}}
-    {{word.example_mean}}
+  <div :class="$style.index">
+    <div :class="$style.top">
+      <img :src="getSrc()" alt="" :class="$style.star" @click="favoriteClicked"/>
+      {{word.word}}
+      ( {{word.yomigana}} )
+      {{word.mean}}
+      <RouterLink :to="getExampleLink(word.id)" :class="$style.example">예시</RouterLink>
+    </div>
+    <div :class="$style.line"></div>
+    <div :class="$style.bottom">
+      {{word.example_word}} <br/>
+      {{word.example_mean}}
+    </div>
   </div>
 </template>
 
@@ -34,10 +40,41 @@ function getSrc() {
   }
 }
 
+function getExampleLink(value:number){
+  return "/example?id="+value;
+}
+
 </script>
 
 <style lang="scss" module>
-.star{
-  width: 15px;
+
+.index{
+  width: 50%;
+  margin-top: 20px;
+  padding: 5px;
+
+  vertical-align: top;
+  display: inline-block;
+  .top{
+    position: relative;
+    .star{
+      width: 15px;
+    }
+    .example{
+      color: #7e7e7e;
+      position: absolute;
+      right: 30px;
+    }
+  }
+  .line{
+    height: 1px;
+    width: 60%;
+    margin:5px 0;
+    border-bottom: 1px solid #000000;
+
+  }
+  .bottom{
+
+  }
 }
 </style>

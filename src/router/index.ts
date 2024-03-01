@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TestView from '../views/TestView.vue'
-import BeginnerView from '../views/BeginnerView.vue'
+import ExampleView from '../views/ExampleView.vue'
 import ChallangeView from '../views/ChallangeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegistView from '../views/RegistView.vue'
@@ -23,9 +23,9 @@ const router = createRouter({
       props: true,
     },
     {
-      path: '/beginner',
-      name: 'beginner',
-      component: BeginnerView
+      path: '/example/:word',
+      name: 'example',
+      component: ExampleView
     },
     {
       path: '/challenge',
