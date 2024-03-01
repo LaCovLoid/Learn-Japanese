@@ -3,17 +3,14 @@
     <main :class="$style.myPageMain" v-if="userId">
       <div :class="$style.top">
         <span :class="$style.name"> {{userId}}님의 단어 리스트</span>
-        <span :class="getStyle(0)" @click="menuClicked(0)">모든 단어</span>
-        <span :class="getStyle(1)" @click="menuClicked(1)">즐겨찾기</span>
+        <span :class="getMenuButtonStyle(0)" @click="menuClicked(0)">모든 단어</span>
+        <span :class="getMenuButtonStyle(1)" @click="menuClicked(1)">즐겨찾기</span>
       </div>
-      <div :class="$style.wordContainer" v-if="menuSelected == 0">
-        <!-- 클릭 누르면 routerView로 연결해서 단어 상세보기
-          상세보기는 chatGPT(3.5 무료) 써서 '~~ 상세 뜻' 출력 
-        -->
-        <wordComponent v-for="(item,index) in resolve" :key="index" :propData="item" @sendingData="changeFavorite"/>
+      <div :class="$style.wordContainer" v-if="selectedList">
+        <wordComponent v-for="(item) in selectedList" :key="item" :propData="item" @sendingData="changeFavorite" />
       </div>
-      <div :class="$style.wordContainer" v-if="menuSelected == 1">
-        <wordComponent v-for="(item,index) in favorite" :key="index" :propData="item" @sendingData="changeFavorite"/>
+      <div :class="$style.bottom">
+        <span v-for="index in maxPage" :key="index" @click="pageSelected(index)" :class="getPageButtonStyle(index)">{{ index }}</span>
       </div>
     </main>
   </div>
@@ -30,25 +27,32 @@ const store = piniaStore();
 
 let resolve:any = [];
 let favorite:any = [];
+let selectedList:any = ref([]);
 let userId = ref("");
-let menuSelected = ref(0);
+let selectedMenu = ref(0);
+let maxPage = ref(1);
+let selectedPage = ref(1);
 
-if (store.accessToken=="" || store.accessToken==null) {
-  alert("로그인한 유저만 들어올 수 있는 페이지입니다.")
-  router.push("/");
-}
+checkLogin();
 
 getAPI("/user_info")
   .then(userInfoFetchHandler)
   .catch(userInfoFailedHandler);
+
+function checkLogin() {
+  if (store.accessToken=="" || store.accessToken==null) {
+    alert("로그인한 유저만 들어올 수 있는 페이지입니다.")
+    router.push("/");
+  }
+}
 
 function userInfoFetchHandler(response:any) {
   resolve = response.data.resolve;
   userId.value = response.data.user_id;
 
   let favoriteNumbers = response.data.favorite;
-  for (var i = 0; i < favoriteNumbers.length; i++) {
-    for (var j = 0; j < resolve.length; j++) {
+  for (let i = 0; i < favoriteNumbers.length; i++) {
+    for (let j = 0; j < resolve.length; j++) {
       if (resolve[j].id == favoriteNumbers[i]){
         favorite.push(resolve[j]);
         resolve[j]['favorite'] = 1;
@@ -56,10 +60,31 @@ function userInfoFetchHandler(response:any) {
       }
     }
   }
+
+  maxPage.value = (resolve.length-1)/10;
+  pageSelected(1);
 }
 function userInfoFailedHandler() {
   alert("잘못된 유저정보입니다.");
   router.push('/');
+}
+
+function pageSelected(num:number) {
+  selectedList.value = [];
+  selectedPage.value = num;
+  maxPage.value = selectedMenu.value ? Math.trunc((favorite.length-1)/10)+1 : Math.trunc((resolve.length-1)/10)+1;
+
+  if (selectedMenu.value) {
+    for (let i = 0; i < 10; i++) {
+      selectedList.value.push(favorite[(num-1)*10 + i]);
+      if (num == maxPage.value && i == (favorite.length%10)-1) break;
+    }
+  } else {
+    for (let i = 0; i < 10; i++) {
+      selectedList.value.push(resolve[(num-1)*10 + i]);
+      if (num == maxPage.value && i == (resolve.length%10)-1) break;
+    }
+  }
 }
 
 function changeFavorite(data:any) {
@@ -83,29 +108,29 @@ function changeFavorite(data:any) {
       }
     }
   }
-
-  //양쪽에서 클릭하고 새로고침하면 나오는 버그  (두번누르니 작동안하는버그같음) 혹은 두번이상누르면 첫번째것만인정되는걸지도
-  //코드 다듬기
-  //기초부터 페이지 제작 && 즐겨찾기와 모든단어 단어수 20개씩 페이지 나누기
-  //UI개선 && 단어 눌렀을때 chatGPT로 상세 뜻 적어주는 페이지 띄우기
-  //포폴만들준비
 }
-
 function modifyFetchHandler(response:any) {
+
 }
 function modifyFailedHandler() {
   alert("error");
   router.push('/');
 }
 
-function getStyle(value: number) {
-  let text = "menu menu"+String(value);
-  if (value == menuSelected.value) text = text + " selected";
+function getMenuButtonStyle(value: number) {
+  let text = "menu menu" + String(value);
+  if (value == selectedMenu.value) text = text + " selected";
+  return text;
+}
+function getPageButtonStyle(value: number) {
+  let text = "page";
+  if (value == selectedPage.value) text = text + " selected";
   return text;
 }
 
 function menuClicked(value: number) {
-  menuSelected.value = value;
+  selectedMenu.value = value;
+  pageSelected(1);
 }
 
 </script>
@@ -131,6 +156,12 @@ function menuClicked(value: number) {
 .selected{
   background-color: rgb(255, 125, 125);
 }
+.page{
+  margin: 5px;
+  padding: 1px 5px;
+  border: 1px solid #000000;
+  cursor: pointer;
+}
 </style>
 
 <style lang="scss" module>
@@ -147,12 +178,16 @@ function menuClicked(value: number) {
     position: relative;
     
     .top{
-      border-bottom: 1px solid #000000;
+      border-bottom: 4px solid #000000;
       position: relative;
 
       .name{
         font-size: 36px;
       }
+    }
+    .bottom{
+      margin-top: 20px;
+      text-align: center;
     }
   }
 }

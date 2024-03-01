@@ -20,11 +20,19 @@ import router from "@/router";
 import { postAPI } from '@/api/api';
 import { piniaStore } from '@/store/index';
 
-
 const store = piniaStore();
 
 let id = ref("");
 let password = ref("");
+
+loginCheck();
+
+function loginCheck() {
+  if (store.accessToken) {
+    alert("이미 로그인되어있습니다.");
+    router.push("/mypage");
+  }
+}
 
 function onSubmit() {
   postAPI("/login",{
